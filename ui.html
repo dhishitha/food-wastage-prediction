@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodShare AI - Smart Food Redistribution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --light-green: #4caf50;
+            --dark-green: #1b5e20;
+            --alert-orange: #ff9800;
+            --warning-red: #f44336;
+            --background: #f5f5f5;
+            --card-bg: #ffffff;
+            --text-dark: #333333;
+            --text-light: #757575;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: var(--primary-green);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 3rem 2rem;
+            background-color: var(--card-bg);
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .about {
+            background-color: #f8f9fa;
+        }
+
+        .contact {
+            background-color: #fff;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        .about-content,
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .contact-card {
+            flex: 1;
+            min-width: 250px;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-green);
+            color: white;
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 1rem;
+        }
+
+        .back-button {
+            color: white;
+            margin-right: 10px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-menu li a:hover,
+        .sidebar-menu li a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Alert Card */
+        .alert-card {
+            border-left: 4px solid var(--alert-orange);
+        }
+
+        .alert-card .card-title {
+            color: var(--alert-orange);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .radio-label input[type="radio"] {
+            margin: 0;
+        }
+
+        /* Table Styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .table th {
+            font-weight: 600;
+            background-color: #f9f9f9;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            height: 300px;
+            margin-bottom: 2rem;
+        }
+
+        /* NGO Donation Cards */
+        .donation-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .donation-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-left: 4px solid var(--light-green);
+        }
+
+        .donation-card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .donation-card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .donation-card-source {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .donation-card-details {
+            margin-bottom: 1rem;
+        }
+
+        .donation-card-details div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .donation-card-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-success {
+            background-color: var(--light-green);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--warning-red);
+            color: white;
+        }
+
+        /* Map Container */
+        .map-container {
+            height: 300px;
+            background-color: #eee;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar-header {
+                display: flex;
+                align-items: center;
+            }
+
+            .back-button {
+                color: white;
+                margin-right: 10px;
+                text-decoration: none;
+            }
+
+            .sidebar-header h3 {
+                margin: 0;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+
+            .sidebar-menu li {
+                flex: 0 0 auto;
+            }
+
+            .sidebar-menu li a {
+                padding: 0.5rem 1rem;
+            }
+
+            .steps {
+                flex-direction: column;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Public Homepage -->
+    <div id="homepage">
+        <header>
+            <div class="logo">
+                <i class="fas fa-share-alt"></i>
+                <span>FoodShare AI</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-primary" onclick="showLogin('kitchen')">Kitchen Login</button>
+                <button class="btn btn-secondary" onclick="showLogin('ngo')">NGO Login</button>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h1>Smart Food Redistribution Powered by AI</h1>
+            <p>Reduce food waste and fight hunger by connecting surplus food from kitchens with local NGOs that can
+                distribute it to those in need.</p>
+        </section>
+
+        <section class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="meals-saved">24,589</div>
+                <div class="stat-label">Meals Saved</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="ngos-onboarded">127</div>
+                <div class="stat-label">NGOs Onboarded</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="kitchens-joined">342</div>
+                <div class="stat-label">Kitchens Joined</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="co2-saved">18.7</div>
+                <div class="stat-label">Tons CO₂ Saved</div>
+            </div>
+        </section>
+
+        <section class="how-it-works" id="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>1. Log Food Data</h3>
+                    <p>Kitchens record daily food preparation and consumption data through our simple interface.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>2. AI Predicts Surplus</h3>
+                    <p>Our machine learning algorithms analyze patterns to predict surplus food before it's wasted.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>3. Connect & Donate</h3>
+                    <p>Automatically match surplus food with nearby NGOs who can distribute it to those in need.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <h2>About Our Initiative</h2>
+            <div class="about-content">
+                <p>Smart Food Redistribution is a technology-driven solution to combat food waste and hunger
+                    simultaneously. Our platform leverages artificial intelligence to create an efficient bridge between
+                    food providers (restaurants, cafeterias, event venues) and charitable organizations that serve
+                    vulnerable populations.</p>
+                <p>By joining our platform, kitchens not only reduce their environmental impact but also contribute
+                    meaningfully to their communities, while NGOs gain reliable access to quality food for their
+                    beneficiaries.</p>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <h2>Contact Us</h2>
+            <div class="contact-content">
+                <p>Get in touch with us for partnerships, questions, or to join our network:</p>
+
+                <div class="contact-methods">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email</h3>
+                        <p>info@foodredistribution.org</p>
+                        <p>support@foodredistribution.org</p>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>Phone</h3>
+                        <p>+1 (800) 555-FOOD</p>
+                        <p>Mon-Fri: 9am-5pm EST</p>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Office</h3>
+                        <p>123 Green Street</p>
+                        <p>Sustainability City, SC 12345</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Kitchen Dashboard (Hidden by default) -->
+    <div id="kitchen-dashboard" class="dashboard" style="display: none;">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <a href="#" onclick="showHomepage()" class="back-button"
+                    style="color: white; margin-right: 10px; text-decoration: none;">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h3>Kitchen Dashboard</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" onclick="showPage('log-food')"><i class="fas fa-utensils"></i> Log Food</a></li>
+                <li><a href="#" onclick="showPage('surplus-alerts')"><i class="fas fa-bell"></i> Surplus Alerts</a></li>
+                <li><a href="#" onclick="showPage('donation-history')"><i class="fas fa-history"></i> Donation
+                        History</a></li>
+                <li><a href="#" onclick="showPage('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#" onclick="showHomepage()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Kitchen Dashboard</h1>
+                <div class="btn btn-primary">Help</div>
+            </div>
+
+            <div class="card alert-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> Surplus Alert</h2>
+                    <span class="badge">Today</span>
+                </div>
+                <p>You have <strong>8kg</strong> of unused food that could be donated.</p>
+                <div class="btn btn-success" style="margin-top: 1rem;">Donate to NGO</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Predicted Surplus</h2>
+                </div>
+                <p id="predicted-surplus"><strong>⚠️ Predicted Surplus Tomorrow:</strong> Loading...</p>
+
+                <div class="btn btn-primary" style="margin-top: 1rem;">Adjust Tomorrow's Plan</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Log Today's Food</h2>
+                </div>
+                <form id="food-log-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Food Item</label>
+                            <input type="text" class="form-control" placeholder="e.g., Rice, Vegetables" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Quantity Prepared (kg)</label>
+                            <input type="number" step="0.1" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Quantity Consumed (kg)</label>
+                            <input type="number" step="0.1" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Meal Type</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="mealType" value="Breakfast" required>
+                                Breakfast
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="mealType" value="Lunch">
+                                Lunch
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="mealType" value="Dinner">
+                                Dinner
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Notes (optional)</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Entry</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent History</h2>
+                    <div class="btn btn-secondary">Export CSV</div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Item</th>
+                            <th>Prepared</th>
+                            <th>Consumed</th>
+                            <th>Surplus</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2023-06-15</td>
+                            <td>Rice</td>
+                            <td>20 kg</td>
+                            <td>15 kg</td>
+                            <td>5 kg</td>
+                            <td>Donated</td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-14</td>
+                            <td>Vegetables</td>
+                            <td>8 kg</td>
+                            <td>6 kg</td>
+                            <td>2 kg</td>
+                            <td>Donated</td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-13</td>
+                            <td>Chicken Curry</td>
+                            <td>12 kg</td>
+                            <td>12 kg</td>
+                            <td>0 kg</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- NGO Dashboard (Hidden by default) -->
+    <div id="ngo-dashboard" class="dashboard" style="display: none;">
+        <div class="sidebar">
+            <div class="sidebar-header" style="display: flex; align-items: center;">
+                <a href="#" onclick="showHomepage()" class="back-button"
+                    style="color: white; margin-right: 10px; text-decoration: none;">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h3 style="margin: 0;">NGO Dashboard</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-inbox"></i> Donation Requests</a></li>
+                <li><a href="#"><i class="fas fa-map-marker-alt"></i> Pickup Coordination</a></li>
+                <li><a href="#"><i class="fas fa-history"></i> Donation History</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#" onclick="showHomepage()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">NGO Dashboard</h1>
+                <div class="btn btn-primary">Help</div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">NGO Profile</h2>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">NGO Name</label>
+                        <input type="text" class="form-control" value="Hope Foundation" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Max Meals/Day</label>
+                        <input type="number" class="form-control" value="200">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Service Area</label>
+                    <select class="form-control">
+                        <option>Mumbai</option>
+                        <option>Delhi</option>
+                        <option>Bangalore</option>
+                        <option>Hyderabad</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 1rem;">Update Profile</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Incoming Donation Requests</h2>
+                </div>
+                <div class="donation-cards">
+                    <div class="donation-card">
+                        <div class="donation-card-header">
+                            <div class="donation-card-title">Vegetable Biryani</div>
+                            <div class="badge">New</div>
+                        </div>
+                        <div class="donation-card-source">From: ABC Canteen</div>
+                        <div class="donation-card-details">
+                            <div><i class="fas fa-weight-hanging"></i> 8 kg</div>
+                            <div><i class="fas fa-clock"></i> Must pick up before 8:30 PM</div>
+                            <div><i class="fas fa-map-marker-alt"></i> 1.2 km away</div>
+                        </div>
+                        <div class="donation-card-actions">
+                            <button class="btn btn-success">Accept</button>
+                            <button class="btn btn-danger">Decline</button>
+                        </div>
+                    </div>
+
+                    <div class="donation-card">
+                        <div class="donation-card-header">
+                            <div class="donation-card-title">Rice & Dal</div>
+                            <div class="badge">New</div>
+                        </div>
+                        <div class="donation-card-source">From: XYZ Restaurant</div>
+                        <div class="donation-card-details">
+                            <div><i class="fas fa-weight-hanging"></i> 12 kg</div>
+                            <div><i class="fas fa-clock"></i> Must pick up before 9:00 PM</div>
+                            <div><i class="fas fa-map-marker-alt"></i> 2.5 km away</div>
+                        </div>
+                        <div class="donation-card-actions">
+                            <button class="btn btn-success">Accept</button>
+                            <button class="btn btn-danger">Decline</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Pickup Coordination</h2>
+                </div>
+                <div class="map-container">
+                    <i class="fas fa-map-marked-alt fa-3x"></i>
+                    <p>Map showing kitchen location will appear here</p>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Pickup Time</label>
+                    <input type="datetime-local" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Contact Person</label>
+                    <input type="text" class="form-control" value="Rajesh (Kitchen Manager) - 9876543210" readonly>
+                </div>
+                <button class="btn btn-primary">Confirm Pickup</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Recent Donations</h2>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Food Item</th>
+                            <th>Quantity</th>
+                            <th>From</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2023-06-15</td>
+                            <td>Vegetable Curry</td>
+                            <td>5 kg</td>
+                            <td>Grand Hotel</td>
+                            <td>Distributed</td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-14</td>
+                            <td>Rice</td>
+                            <td>10 kg</td>
+                            <td>Sunshine Cafe</td>
+                            <td>Distributed</td>
+                        </tr>
+                        <tr>
+                            <td>2023-06-12</td>
+                            <td>Bread</td>
+                            <td>8 kg</td>
+                            <td>Bakery Corner</td>
+                            <td>Distributed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        async function loadPredictedSurplus() {
+            console.log("in")
+            const res = await fetch("http://127.0.0.1:8000/predict-tomorrow-wastage/");
+            console.log("called")
+            const data = await res.json();
+            console.log("fecthed")
+            console.log(data);
+            const p = document.getElementById("predicted-surplus");
+
+            const lines = data.predictions.map(
+                m => `${m.meal}: ${m.predicted_waste_kg} kg`
+            ).join("<br>");
+
+            p.innerHTML = `<strong>⚠️ Predicted Surplus Tomorrow (${data.tomorrow}):</strong><br>${lines}`;
+            return 1;
+        }
+
+        loadPredictedSurplus();
+
+
+
+        // Simulate stats counting up
+        function animateValue(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Animate stats when page loads
+        window.onload = function () {
+            animateValue("meals-saved", 0, 24589, 2000);
+            animateValue("ngos-onboarded", 0, 127, 2000);
+            animateValue("kitchens-joined", 0, 342, 2000);
+            animateValue("co2-saved", 0, 18.7, 2000);
+
+            // Initialize NGO dashboard tabs
+            setupNGODashboardTabs();
+            setupKitchenDashboardTabs();
+        };
+
+        // Show different dashboards
+        function showLogin(type) {
+            document.getElementById('homepage').style.display = 'none';
+            if (type === 'kitchen') {
+                document.getElementById('kitchen-dashboard').style.display = 'flex';
+            } else {
+                document.getElementById('ngo-dashboard').style.display = 'flex';
+            }
+        }
+
+        function showHomepage() {
+            document.getElementById('homepage').style.display = 'block';
+            document.getElementById('kitchen-dashboard').style.display = 'none';
+            document.getElementById('ngo-dashboard').style.display = 'none';
+        }
+
+        // Form submission
+        document.getElementById('food-log-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const data = {
+                date: form.querySelector('input[type="date"]').value,
+                food_item: form.querySelector('input[placeholder]').value,
+                quantity_prepared: parseFloat(form.querySelectorAll('input[type="number"]')[0].value),
+                quantity_consumed: parseFloat(form.querySelectorAll('input[type="number"]')[1].value),
+                meal_type: form.querySelector('input[name="mealType"]:checked').value
+            };
+
+            const res = await fetch("http://127.0.0.1:8000/submit-food-log/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const result = await res.json();
+            alert(result.message || "Submitted!");
+            form.reset();
+        });
+
+
+        // Handle donation accept/decline
+        document.querySelectorAll('.donation-card-actions .btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const card = this.closest('.donation-card');
+                if (this.classList.contains('btn-success')) {
+                    card.querySelector('.badge').textContent = 'Accepted';
+                    card.querySelector('.badge').style.backgroundColor = 'var(--light-green)';
+                } else {
+                    card.querySelector('.badge').textContent = 'Declined';
+                    card.querySelector('.badge').style.backgroundColor = 'var(--warning-red)';
+                }
+                this.disabled = true;
+                const otherButton = this.classList.contains('btn-success')
+                    ? this.nextElementSibling
+                    : this.previousElementSibling;
+                otherButton.disabled = true;
+            });
+        });
+
+        // NGO Dashboard Tab Functionality
+        function setupNGODashboardTabs() {
+            const sidebarLinks = document.querySelectorAll('#ngo-dashboard .sidebar-menu li a');
+            const contentSections = {
+                'dashboard': `
+                <div class="page-header">
+                    <h1 class="page-title">NGO Dashboard</h1>
+                    <div class="btn btn-primary">Help</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">NGO Profile</h2>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">NGO Name</label>
+                            <input type="text" class="form-control" value="Hope Foundation" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Max Meals/Day</label>
+                            <input type="number" class="form-control" value="200">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Service Area</label>
+                        <select class="form-control">
+                            <option>Mumbai</option>
+                            <option>Delhi</option>
+                            <option>Bangalore</option>
+                            <option selected>Hyderabad</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 1rem;">Update Profile</button>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Incoming Donation Requests</h2>
+                    </div>
+                    <div class="donation-cards">
+                        <div class="donation-card">
+                            <div class="donation-card-header">
+                                <div class="donation-card-title">Vegetable Biryani</div>
+                                <div class="badge">New</div>
+                            </div>
+                            <div class="donation-card-source">From: ABC Canteen</div>
+                            <div class="donation-card-details">
+                                <div><i class="fas fa-weight-hanging"></i> 8 kg</div>
+                                <div><i class="fas fa-clock"></i> Must pick up before 8:30 PM</div>
+                                <div><i class="fas fa-map-marker-alt"></i> 1.2 km away</div>
+                            </div>
+                            <div class="donation-card-actions">
+                                <button class="btn btn-success">Accept</button>
+                                <button class="btn btn-danger">Decline</button>
+                            </div>
+                        </div>
+                        <div class="donation-card">
+                            <div class="donation-card-header">
+                                <div class="donation-card-title">Rice & Dal</div>
+                                <div class="badge">New</div>
+                            </div>
+                            <div class="donation-card-source">From: XYZ Restaurant</div>
+                            <div class="donation-card-details">
+                                <div><i class="fas fa-weight-hanging"></i> 12 kg</div>
+                                <div><i class="fas fa-clock"></i> Must pick up before 9:00 PM</div>
+                                <div><i class="fas fa-map-marker-alt"></i> 2.5 km away</div>
+                            </div>
+                            <div class="donation-card-actions">
+                                <button class="btn btn-success">Accept</button>
+                                <button class="btn btn-danger">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+                'donation-requests': `
+                <div class="page-header">
+                    <h1 class="page-title">Donation Requests</h1>
+                    <div class="btn btn-primary">Help</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Pending Requests</h2>
+                    </div>
+                    <div class="donation-cards">
+                        <div class="donation-card">
+                            <div class="donation-card-header">
+                                <div class="donation-card-title">Vegetable Biryani</div>
+                                <div class="badge">New</div>
+                            </div>
+                            <div class="donation-card-source">From: ABC Canteen</div>
+                            <div class="donation-card-details">
+                                <div><i class="fas fa-weight-hanging"></i> 8 kg</div>
+                                <div><i class="fas fa-clock"></i> Must pick up before 8:30 PM</div>
+                                <div><i class="fas fa-map-marker-alt"></i> 1.2 km away</div>
+                            </div>
+                            <div class="donation-card-actions">
+                                <button class="btn btn-success">Accept</button>
+                                <button class="btn btn-danger">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Accepted Requests</h2>
+                    </div>
+                    <div class="donation-cards">
+                        <div class="donation-card">
+                            <div class="donation-card-header">
+                                <div class="donation-card-title">Rice & Dal</div>
+                                <div class="badge" style="background-color: var(--light-green);">Accepted</div>
+                            </div>
+                            <div class="donation-card-source">From: XYZ Restaurant</div>
+                            <div class="donation-card-details">
+                                <div><i class="fas fa-weight-hanging"></i> 12 kg</div>
+                                <div><i class="fas fa-clock"></i> Must pick up before 9:00 PM</div>
+                                <div><i class="fas fa-map-marker-alt"></i> 2.5 km away</div>
+                            </div>
+                            <div class="donation-card-actions">
+                                <button class="btn btn-primary">Schedule Pickup</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+                'pickup-coordination': `
+                <div class="page-header">
+                    <h1 class="page-title">Pickup Coordination</h1>
+                    <div class="btn btn-primary">Help</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Scheduled Pickups</h2>
+                    </div>
+                    <div class="map-container">
+                        <i class="fas fa-map-marked-alt fa-3x"></i>
+                        <p>Map showing kitchen location will appear here</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Pickup Time</label>
+                        <input type="datetime-local" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Person</label>
+                        <input type="text" class="form-control" value="Rajesh (Kitchen Manager) - 9876543210" readonly>
+                    </div>
+                    <button class="btn btn-primary">Confirm Pickup</button>
+                </div>
+            `,
+                'donation-history': `
+                <div class="page-header">
+                    <h1 class="page-title">Donation History</h1>
+                    <div class="btn btn-primary">Help</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Recent Donations</h2>
+                        <div class="btn btn-secondary">Export CSV</div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Food Item</th>
+                                <th>Quantity</th>
+                                <th>From</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2023-06-15</td>
+                                <td>Vegetable Curry</td>
+                                <td>5 kg</td>
+                                <td>Grand Hotel</td>
+                                <td>Distributed</td>
+                            </tr>
+                            <tr>
+                                <td>2023-06-14</td>
+                                <td>Rice</td>
+                                <td>10 kg</td>
+                                <td>Sunshine Cafe</td>
+                                <td>Distributed</td>
+                            </tr>
+                            <tr>
+                                <td>2023-06-12</td>
+                                <td>Bread</td>
+                                <td>8 kg</td>
+                                <td>Bakery Corner</td>
+                                <td>Distributed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `,
+                'settings': `
+                <div class="page-header">
+                    <h1 class="page-title">Settings</h1>
+                    <div class="btn btn-primary">Help</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Account Settings</h2>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Organization Name</label>
+                        <input type="text" class="form-control" value="Hope Foundation">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" value="contact@hopefoundation.org">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" value="+91 9876543210">
+                    </div>
+                    <button class="btn btn-primary">Save Changes</button>
+                </div>
+            `
+            };
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Remove active class from all links
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+
+                    // Add active class to clicked link
+                    this.classList.add('active');
+
+                    // Get the content for this tab
+                    const mainContent = document.querySelector('#ngo-dashboard .main-content');
+                    let content = '';
+
+                    if (this.textContent.includes('Dashboard')) {
+                        content = contentSections['dashboard'];
+                    } else if (this.textContent.includes('Donation Requests')) {
+                        content = contentSections['donation-requests'];
+                    } else if (this.textContent.includes('Pickup Coordination')) {
+                        content = contentSections['pickup-coordination'];
+                    } else if (this.textContent.includes('Donation History')) {
+                        content = contentSections['donation-history'];
+                    } else if (this.textContent.includes('Settings')) {
+                        content = contentSections['settings'];
+                    }
+
+                    // Update the main content
+                    mainContent.innerHTML = content;
+
+                    // Re-attach event listeners for any buttons in the new content
+                    if (this.textContent.includes('Donation Requests')) {
+                        document.querySelectorAll('.donation-card-actions .btn').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const card = this.closest('.donation-card');
+                                if (this.classList.contains('btn-success')) {
+                                    card.querySelector('.badge').textContent = 'Accepted';
+                                    card.querySelector('.badge').style.backgroundColor = 'var(--light-green)';
+                                } else {
+                                    card.querySelector('.badge').textContent = 'Declined';
+                                    card.querySelector('.badge').style.backgroundColor = 'var(--warning-red)';
+                                }
+                                this.disabled = true;
+                                const otherButton = this.classList.contains('btn-success')
+                                    ? this.nextElementSibling
+                                    : this.previousElementSibling;
+                                otherButton.disabled = true;
+                            });
+                        });
+                    }
+                });
+            });
+        }
+        // Kitchen Dashboard Tab Functionality
+        function setupKitchenDashboardTabs() {
+            const sidebarLinks = document.querySelectorAll('#kitchen-dashboard .sidebar-menu li a');
+            const contentSections = {
+                'dashboard': `
+                <div class="page-header">
+                    <h1 class="page-title">Kitchen Dashboard</h1>
+                    <div class="btn btn-primary">Help</div>
+                </div>
+
+                <div class="card alert-card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> Surplus Alert</h2>
+                        <span class="badge">Today</span>
+                    </div>
+                    <p>You have <strong>8kg</strong> of unused food that could be donated.</p>
+                    <div class="btn btn-success" style="margin-top: 1rem;">Donate to NGO</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Predicted Surplus</h2>
+                    </div>
+                    <p id="predicted-surplus"><strong>⚠️ Predicted Surplus Tomorrow:</strong> Loading...</p>
+
+                    <div class="btn btn-primary" style="margin-top: 1rem;">Adjust Tomorrow's Plan</div>
+                </div>
+            `,
+                'log-food': `
+                <div class="page-header">
+                    <h1 class="page-title">Log Today's Food</h1>
+                    <div class="btn btn-primary">Help</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Log Today's Food</h2>
+                    </div>
+                    <form id="food-log-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Food Item</label>
+                                <input type="text" class="form-control" placeholder="e.g., Rice, Vegetables" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Quantity Prepared (kg)</label>
+                                <input type="number" step="0.1" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Quantity Consumed (kg)</label>
+                                <input type="number" step="0.1" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+            <label>Meal Type</label>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="mealType" value="Breakfast" required>
+                    Breakfast
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="mealType" value="Lunch">
+                    Lunch
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="mealType" value="Dinner">
+                    Dinner
+                </label>
+            </div>
+        </div>
+                        <div class="form-group">
+                            <label class="form-label">Notes (optional)</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Entry</button>
+                    </form>
+                </div>
+            `,
+                'surplus-alerts': `
+                <div class="page-header">
+                    <h1 class="page-title">Surplus Alerts</h1>
+                    <div class="btn btn-primary">Help</div>
+                </div>
+                <div class="card alert-card">
+                    <div class="card-header">
+                        <h2 class="card-title"><i class="fas fa-exclamation-triangle"></i> Current Alerts</h2>
+                    </div>
+                    <div class="alert-item">
+                        <h3>Vegetable Surplus</h3>
+                        <p>You have 5kg of unused vegetables that could be donated.</p>
+                        <button class="btn btn-success">Donate Now</button>
+                    </div>
+                    <div class="alert-item">
+                        <h3>Rice Surplus</h3>
+                        <p>You have 3kg of unused rice that could be donated.</p>
+                        <button class="btn btn-success">Donate Now</button>
+                    </div>
+                </div>
+            `,
+                'donation-history': `
+                <div class="page-header">
+                    <h1 class="page-title">Donation History</h1>
+                    <div class="btn btn-primary">Help</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Recent History</h2>
+                        <div class="btn btn-secondary">Export CSV</div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Item</th>
+                                <th>Prepared</th>
+                                <th>Consumed</th>
+                                <th>Surplus</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2023-06-15</td>
+                                <td>Rice</td>
+                                <td>20 kg</td>
+                                <td>15 kg</td>
+                                <td>5 kg</td>
+                                <td>Donated</td>
+                            </tr>
+                            <tr>
+                                <td>2023-06-14</td>
+                                <td>Vegetables</td>
+                                <td>8 kg</td>
+                                <td>6 kg</td>
+                                <td>2 kg</td>
+                                <td>Donated</td>
+                            </tr>
+                            <tr>
+                                <td>2023-06-13</td>
+                                <td>Chicken Curry</td>
+                                <td>12 kg</td>
+                                <td>12 kg</td>
+                                <td>0 kg</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `,
+                'settings': `
+                <div class="page-header">
+                    <h1 class="page-title">Settings</h1>
+                    <div class="btn btn-primary">Help</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Kitchen Settings</h2>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Kitchen Name</label>
+                        <input type="text" class="form-control" value="ABC Restaurant">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Person</label>
+                        <input type="text" class="form-control" value="Rajesh Kumar">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" value="+91 9876543210">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-control" value="Hyderabad">
+                    </div>
+                    <button class="btn btn-primary">Save Settings</button>
+                </div>
+            `
+            };
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Remove active class from all links
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+
+                    // Add active class to clicked link
+                    this.classList.add('active');
+
+                    // Get the content for this tab
+                    const mainContent = document.querySelector('#kitchen-dashboard .main-content');
+                    let content = '';
+
+                    if (this.textContent.includes('Dashboard')) {
+                        content = contentSections['dashboard'];
+                    } else if (this.textContent.includes('Log Food')) {
+                        content = contentSections['log-food'];
+                    } else if (this.textContent.includes('Surplus Alerts')) {
+                        content = contentSections['surplus-alerts'];
+                    } else if (this.textContent.includes('Donation History')) {
+                        content = contentSections['donation-history'];
+                    } else if (this.textContent.includes('Settings')) {
+                        content = contentSections['settings'];
+                    }
+
+                    // Update the main content
+                    mainContent.innerHTML = content;
+
+                    // Re-attach form submission handler for Log Food tab
+                    if (this.textContent.includes('Log Food')) {
+                        document.getElementById('food-log-form').addEventListener('submit', function (e) {
+                            e.preventDefault();
+                            alert('Food data logged successfully!');
+                            this.reset();
+                        });
+                    }
+
+                    // Add click handler for Donate buttons in Surplus Alerts
+                    if (this.textContent.includes('Surplus Alerts')) {
+                        document.querySelectorAll('.alert-item .btn-success').forEach(button => {
+                            button.addEventListener('click', function () {
+                                alert('Donation request sent to nearby NGOs!');
+                            });
+                        });
+                    }
+                });
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
